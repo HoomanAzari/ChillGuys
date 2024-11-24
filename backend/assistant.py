@@ -1,8 +1,10 @@
 import vehicles
+import os
 from enum import Enum
 from langchain_community.vectorstores import Chroma
 from langchain_nomic.embeddings import NomicEmbeddings
 from langchain.prompts import PromptTemplate
+from langchain_ollama import OllamaEmbeddings
 from langchain_community.chat_models import ChatOllama
 from langchain_core.output_parsers import JsonOutputParser
 
@@ -26,21 +28,32 @@ class Assistant:
 
     def __init__(self,
                  vehicles_list: list[vehicles.Vehicle],
-                 llama_name: str = "llama3.2:1b"):
-        span = slice(1, 10)
+                 llama_name: str = "llama3"):
+        #span = slice(1, len(vehicles_list)//10)
+        span = slice(1, 100)
         vehicles_str = [str(vehicle) for vehicle in vehicles_list]
         for vehicle in vehicles_list[span]:
             print(f"{vehicle.Make} {vehicle.Model} {vehicle.Body}")
         texts = vehicles_str[span]
-        self.retriever = Chroma.from_texts(
+       # self.retriever = Chroma.from_texts(
+       #     # texts=vehicles_str,
+       #     texts=texts,
+       #     collection_name="rag-chroma",
+       #     embedding=NomicEmbeddings(
+       #         model="nomic-embed-text-v1.5",
+       #         # device="cpu",
+       #         inference_mode="local",
+       #     )).as_retriever()
+        save_directory = "./vectorstore1"
+        if os.path.exists(save_directory):
+            self.retriever = Chroma(persist_directory=save_directory, embedding_function=OllamaEmbeddings(model=llama_name)).as_retriever()
+        else:
+            self.retriever = Chroma.from_texts(
             # texts=vehicles_str,
+            persist_directory=save_directory,
             texts=texts,
             collection_name="rag-chroma",
-            embedding=NomicEmbeddings(
-                model="nomic-embed-text-v1.5",
-                # device="cpu",
-                inference_mode="local",
-            )).as_retriever()
+            embedding=OllamaEmbeddings(model=llama_name)).as_retriever()
         # print(f"GOT RETRIEVER {self.retriever}")
         # template = PromptTemplate(template=\
         #                           """You are a helpful AI assistant tasked with assisting humans with their inquiries about the cars available at a given dealership. You are given the past history of the conversation You are also given a list of all the available vehicles at that dealship. \nHere is a history: \n\n {history} \n\nHere are the possibly relevant vehicles: \n\n {vehicles} \n\n The human's latest response is : \n\n {question} \n\nYour response as the AI:

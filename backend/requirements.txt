@@ -10,3 +10,4 @@ langgraph
 tavily-python
 nomic[local]
 gpt4all
+langchain-ollama

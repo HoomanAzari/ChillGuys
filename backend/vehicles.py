@@ -49,9 +49,12 @@ class Vehicle:
         self.IntColorHexCode = json_object["IntColorHexCode"]
         self.EngineDisplacementCubicInches = json_object[
             "EngineDisplacementCubicInches"]
-
+    
     def __str__(self):
-        return ', '.join('%s: %s' % item for item in vars(self).items())
+        items = vars(self).items()
+        desired_atts = ["Type", "Year", "Make", "Model", "Body", "Doors", "ExteriorColor", "InteriorColor", "Ext_Color_Generic", "Int_Color_Generic", "Int_Upholstery", "Engine_Description", "Transmission_Description", "CityMPG", "HighwayMPG", "EPAClassification", "Wheelbase_Code", "Miles", "SellingPrice", "BookValue", "Internet_Price", "MarketClass", "PassengerCapacity", "Style_Description", "Options"]
+        items = [item for item in items if item[0] in desired_atts]
+        return ', '.join('%s: %s' % item for item in items)
 
     @staticmethod
     def get_objects(path_to_json: str) -> list[type("Vehicle")]:
