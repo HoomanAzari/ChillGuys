@@ -41,6 +41,9 @@ The ChillGuys web application is powered by a blend of cutting-edge technologies
 - **LangChain:** The integration of LangChain enables robust functionality for both LLMs, ensuring smooth performance and efficient data handling.
 - **Personalized Prompt Engineering:** A tailored prompt has been crafted to perfectly align with the Chill Guy persona, ensuring every interaction reflects the assistant’s relaxed and helpful character.
 
+## Dependencies
+Requires: `git`, `python`, and `pip`.
+
 ## Usage
 
 1. **Clone the Repository:**
@@ -52,17 +55,25 @@ The ChillGuys web application is powered by a blend of cutting-edge technologies
 2. **Setup Environment:**
    Install the required dependencies:
    ```bash
-   pip install -r requirements.txt
+   pip install -r backend/requirements.txt
+   ```
+   
+3. **Download LLaMA3 and LLaMA3.2:1b**
+   ```bash
+   curl -fsSL https://ollama.com/install.sh | sh
+   ollama pull llama3
+   ollama pull llama3.2:1b
    ```
 
-3. **Run the Application:**
+4. **Run the Application:**
    Start the server:
    ```bash
-   python app.py
+   cd backend
+   sudo python app.py
    ```
 
-4. **Interact with the AI:**
-   Access the application via the designated interface (e.g., web app, API, or command-line interface) to chat with the ChillGuys assistant.
+6. **Interact with the AI:**
+   Access the application via the IP address printed by the `app.py` script.
 
 ## License
 
