@@ -1,6 +1,8 @@
 const chatBody = document.querySelector(".chat-body");
 const messageInput = document.querySelector(".message-input");
 const sendMessageButton = document.querySelector("#send-message");
+const chatbotToggler = document.querySelector("#chatbot-toggler");
+const closeChatbot = document.querySelector("#close-chatbot");
 
 // API Setup
 const API_KEY = "AIzaSyAu4tU1Qi6kfqELFzoTAeVHWk5Y65vNwfg";
@@ -9,6 +11,8 @@ const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-
 const userData = {
     message: null
 }
+
+const initialInputHeight = messageInput.scrollHeight;
 
 // Create a message element with dynamic classes and return it
 const createMessageElement = (content, ...classes) => {
@@ -43,8 +47,11 @@ const generateBotResponse = async(incomingMessageDiv) => {
         messageElement.innerText = apiResponseText;
     } catch (error) {
         console.log(error);
+        messageElement.innerText = error.message;
+        messageElement.style.color = "#ff0000";
     } finally {
         incomingMessageDiv.classList.remove("thinking");
+        chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: "smooth" });
     }
 }
 
@@ -54,11 +61,13 @@ const handleOutgoingMessage = (e) => {
     userData.message = messageInput.value.trim();
     // Clearing the textarea after the message is sent
     messageInput.value = ""; 
+    messageInput.dispatchEvent(new Event("input"));
     // Create and display user message
     const messageContent = `<div class="message-text"></div>`; // Use backticks for template literals
     const outgoingMessageDiv = createMessageElement(messageContent, "user-message");
     outgoingMessageDiv.querySelector(".message-text").innerText = userData.message;
     chatBody.appendChild(outgoingMessageDiv); 
+    chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: "smooth" });
 
     // Thinking indicator shown after simulating bot due to delay
     setTimeout(() => {
@@ -76,6 +85,7 @@ const handleOutgoingMessage = (e) => {
                 </div>`; // Use backticks for template literals
         const incomingMessageDiv = createMessageElement(messageContent, "bot-message", "thinking");
         chatBody.appendChild(incomingMessageDiv); 
+        chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: "smooth" });
         generateBotResponse(incomingMessageDiv);
     }, 600);
 }
@@ -83,9 +93,18 @@ const handleOutgoingMessage = (e) => {
 // Handles pressing enter for sending messages
 messageInput.addEventListener("keydown", (e) => {
     const userMessage = e.target.value.trim();
-    if(e.key === "Enter" && userMessage) {
+    if(e.key === "Enter" && userMessage && !e.shiftKey && window.innerWidth > 768) {
         handleOutgoingMessage(e);
     }
 });
 
-sendMessageButton.addEventListener("click", (e) => handleOutgoingMessage(e)) 
+// Adjust the height of chat dynamically
+messageInput.addEventListener("input", () => {
+    messageInput.style.height = `${initialInputHeight}px`;
+    messageInput.style.height = `${messageInput.scrollHeight}px`;
+    document.querySelector(".chat-form").style.borderRadius = messageInput.scrollHeight > initialInputHeight ? "15px" : "32px";
+});
+
+sendMessageButton.addEventListener("click", (e) => handleOutgoingMessage(e));
+chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
+closeChatbot.addEventListener("click", () => document.body.classList.remove("show-chatbot")); 
