@@ -1,4 +1,7 @@
 # ChillGuys - AI Chat Assistant for Car Dealerships
+<p align="center">
+  <img src="frontend/face-close.webp" alt="ChillGuys Screenshot" width="500">
+</p>
 
 Welcome to the ChillGuys project! This repository showcases our submission for the CodeJam14 hackathon, where we've developed an AI chat assistant designed to make car dealership inquiries relaxed, fun, and efficient.
 
