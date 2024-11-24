@@ -28,39 +28,35 @@ class Assistant:
 
     def __init__(self,
                  vehicles_list: list[vehicles.Vehicle],
+                 embedding_llama: str = "llama3.2:1b",
                  llama_name: str = "llama3"):
-        #span = slice(1, len(vehicles_list)//10)
-        span = slice(1, 100)
+        # span = slice(1, 1000)
+        span = slice(1, len(vehicles_list))
         vehicles_str = [str(vehicle) for vehicle in vehicles_list]
-        for vehicle in vehicles_list[span]:
-            print(f"{vehicle.Make} {vehicle.Model} {vehicle.Body}")
+        # for vehicle in vehicles_list[span]:
+        #     print(vehicle)
         texts = vehicles_str[span]
-       # self.retriever = Chroma.from_texts(
-       #     # texts=vehicles_str,
-       #     texts=texts,
-       #     collection_name="rag-chroma",
-       #     embedding=NomicEmbeddings(
-       #         model="nomic-embed-text-v1.5",
-       #         # device="cpu",
-       #         inference_mode="local",
-       #     )).as_retriever()
         save_directory = "./vectorstore1"
+        embedding= OllamaEmbeddings(model=embedding_llama)
         if os.path.exists(save_directory):
-            self.retriever = Chroma(persist_directory=save_directory, embedding_function=OllamaEmbeddings(model=llama_name)).as_retriever()
+            self.retriever = Chroma(persist_directory=save_directory, embedding_function=embedding).as_retriever()
         else:
+            print("EMBEDDINGS NOT SAVED, CREATING NEW ONES")
             self.retriever = Chroma.from_texts(
             # texts=vehicles_str,
             persist_directory=save_directory,
             texts=texts,
             collection_name="rag-chroma",
-            embedding=OllamaEmbeddings(model=llama_name)).as_retriever()
-        # print(f"GOT RETRIEVER {self.retriever}")
+            embedding=embedding).as_retriever()
         # template = PromptTemplate(template=\
         #                           """You are a helpful AI assistant tasked with assisting humans with their inquiries about the cars available at a given dealership. You are given the past history of the conversation You are also given a list of all the available vehicles at that dealship. \nHere is a history: \n\n {history} \n\nHere are the possibly relevant vehicles: \n\n {vehicles} \n\n The human's latest response is : \n\n {question} \n\nYour response as the AI:
         #                 """,
         #                                input_variables=["history", "vehicles", "question"])
+        # template = PromptTemplate(template=\
+        #                           """Prompt:\nYou are a helpful AI chat assistant designed to assist customers with their inquiries about the cars available at a specific dealership. You have access to the conversation history and a list of all the vehicles available at the dealership. Your responses should be appropriately sized, providing enough information to answer the customer's question without being too long or too short.\nConversation History: \n\n{history}\n\nAvailable vehicles: \n\n{vehicles}\n\nCustomer's Latest Query:\n\n{question}\n\nYour Response as the AI:""",
+        #                                input_variables=["history", "vehicles", "question"])
         template = PromptTemplate(template=\
-                                  """You are a helpful AI assistant designed to assist customers with their inquiries about the cars available at a specific dealership. You have access to the conversation history and a list of all the vehicles available at the dealership.\nConversation History: \n\n{history}\n\nAvailable vehicles: \n\n{vehicles}\n\nCustomer's Latest Query:\n\n{question}\n\nYour Response as the AI:""",
+                                  """Prompt:\nYou are an AI chat assistant designed to assist customers with their inquiries about the cars available at a specific dealership. You have access to the conversation history and a subset of the vehicles that another AI has identified as relevant for this prompt. Your responses should be appropriately sized, providing enough information to answer the customer's question without being too long or too short. Additionally, adopt a relaxed and laid-back tone, similar to the "Chill Guy" meme, also known as "My New Character." This means your responses should be calm, friendly, and unbothered, helping customers feel at ease. Unlike the real "Chill Guy," your main challenge is finding the best car for the customer, but you're here to help with that.\n\nKey Characteristics of the "Chill Guy" Tone:\n - Relaxed and easygoing\n - Friendly and approachable\n - Calm and unbothered\n - Casual and conversational\n - Patient and supportive\n - Enthusiastic about finding the best car\nConversation History: \n\n{history}\n\nAvailable vehicles: \n\n{vehicles}\n\nCustomer's Latest Query:\n\n{question}\n\nYour Response as the AI:""",
                                        input_variables=["history", "vehicles", "question"])
         # print(f"GOT TEMPLATE {template}")
         llm_model = ChatOllama(

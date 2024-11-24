@@ -51,10 +51,14 @@ class Vehicle:
             "EngineDisplacementCubicInches"]
     
     def __str__(self):
-        items = vars(self).items()
-        desired_atts = ["Type", "Year", "Make", "Model", "Body", "Doors", "ExteriorColor", "InteriorColor", "Ext_Color_Generic", "Int_Color_Generic", "Int_Upholstery", "Engine_Description", "Transmission_Description", "CityMPG", "HighwayMPG", "EPAClassification", "Wheelbase_Code", "Miles", "SellingPrice", "BookValue", "Internet_Price", "MarketClass", "PassengerCapacity", "Style_Description", "Options"]
-        items = [item for item in items if item[0] in desired_atts]
-        return ', '.join('%s: %s' % item for item in items)
+        # items = vars(self).items()
+        # desired_atts = ["Type", "Year", "Make", "Model", "Body", "Doors", "ExteriorColor", "InteriorColor", "Ext_Color_Generic", "Int_Color_Generic", "Int_Upholstery", "Engine_Description", "Transmission_Description", "CityMPG", "HighwayMPG", "EPAClassification", "Wheelbase_Code", "Miles", "SellingPrice", "BookValue", "Internet_Price", "MarketClass", "PassengerCapacity", "Style_Description", 
+        #         #"Options"
+        #         ]
+        # items = [item for item in items if item[0] in desired_atts]
+        # return ', '.join('%s: %s' % item for item in items)
+        #   "SellingPrice", "BookValue", "Internet_Price", "MarketClass", "PassengerCapacity", "Style_Description", 
+        return f"A {self.Type} {self.Make} {self.Model} {self.Body}, from {self.Year}. It has {self.Doors} doors and can carry up to {self.PassengerCapacity} passengers. It has a {self.ExteriorColor} color on the outside, and {self.InteriorColor} color on the inside. It has a style that is {self.Style_Description}. It's engine is a {self.Engine_Description}, with a transmission that is a {self.Transmission_Description}. It has {self.Miles} miles on the odometer, going for {self.SellingPrice} CAD."
 
     @staticmethod
     def get_objects(path_to_json: str) -> list[type("Vehicle")]:
