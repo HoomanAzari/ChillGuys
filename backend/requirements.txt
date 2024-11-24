@@ -1,5 +1,5 @@
-speechrecognition==3.11.0
-pocketsphinx==5.0.3
+speechrecognition
+pocketsphinx
 langchain-nomic
 langchain_community
 tiktoken
