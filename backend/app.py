@@ -1,50 +1,48 @@
-from flask import Flask, request, jsonify, send_from_directory
-import requests
+import os
+from flask import Flask, request, jsonify
+from assistant import Assistant, vehicles
 
-app = Flask(__name__, static_folder="frontend")
+# Initialize the Assistant with the vehicle data
+vehicles_list = vehicles.Vehicle.get_objects("../vehicles.json")
+assistant = Assistant(vehicles_list)
 
-# Replace with your actual API key
-API_KEY = "AIzaSyAu4tU1Qi6kfqELFzoTAeVHWk5Y65vNwfg"
-API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={API_KEY}"
+app = Flask(__name__, static_folder="../frontend")
+
 
 @app.route("/")
 def index():
-    """Serve the updated HTML file."""
-    return send_from_directory("frontend", "updated_index.html")
+    """Serve the main HTML page."""
+    return app.send_static_file("updated_index.html")
 
-@app.route("/frontend/<path:filename>")
-def static_files(filename):
-    """Serve static files from the frontend folder."""
-    return send_from_directory("frontend", filename)
 
 @app.route("/generate-response", methods=["POST"])
-def generate_response():
-    """Handle POST request to generate a bot response."""
+def generate_response_route():
+    """
+    Handle POST requests to generate a bot response using the Assistant.
+    """
     try:
-        # Get the user's message and chat history from the request
+        # Parse the request JSON
         data = request.json
-        user_message = data.get("message", "")
+        latest_message = data.get("message", "")
         chat_history = data.get("chat_history", [])
 
-        # Prepare the payload for the external API
-        payload = {
-            "contents": chat_history + [{"role": "user", "parts": [{"text": user_message}]}]
-        }
+        # Convert chat history into `Interaction` objects
+        past_interactions = [
+            Assistant.Interaction(
+                source=Assistant.Interaction.Source.HUMAN if chat["role"] == "user" else Assistant.Interaction.Source.AI,
+                message=chat["text"]
+            )
+            for chat in chat_history
+        ]
 
-        # Make the API request
-        response = requests.post(API_URL, json=payload)
-        response.raise_for_status()
-        api_response = response.json()
+        # Use prompt_bot to generate the bot response
+        bot_response = assistant.prompt_bot(past_interactions, latest_message)
 
-        # Extract the bot's response
-        bot_response = api_response.get("candidates", [{}])[0].get("content", {}).get("parts", [{}])[0].get("text", "").strip()
-
-        # Return the bot's response
+        # Return the generated response
         return jsonify({"bot_response": bot_response})
-
     except Exception as e:
-        # Handle errors gracefully
         return jsonify({"error": str(e)}), 500
+
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -44,7 +44,7 @@ const generateBotResponse = async (incomingMessageDiv) => {
         messageElement.innerText = botResponse;
 
         // Add the bot response to chat history
-        chatHistory.push({ role: "model", parts: [{ text: botResponse }] });
+        chatHistory.push({ role: "assistant", text: botResponse });
     } catch (error) {
         console.error(error);
         messageElement.innerText = error.message;
@@ -73,7 +73,7 @@ const handleOutgoingMessage = (e) => {
     chatBody.appendChild(outgoingMessageDiv);
 
     // Add the user's message to chat history
-    chatHistory.push({ role: "user", parts: [{ text: userData.message }] });
+    chatHistory.push({ role: "user", text: userData.message });
 
     chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: "smooth" });
 
