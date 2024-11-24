@@ -1,0 +1,12 @@
+speechrecognition==3.11.0
+pocketsphinx==5.0.3
+langchain-nomic
+langchain_community
+tiktoken
+langchainhub
+chromadb
+langchain
+langgraph
+tavily-python
+nomic[local]
+gpt4all

@@ -50,6 +50,9 @@ class Vehicle:
         self.EngineDisplacementCubicInches = json_object[
             "EngineDisplacementCubicInches"]
 
+    def __str__(self):
+        return ', '.join('%s: %s' % item for item in vars(self).items())
+
     @staticmethod
     def get_objects(path_to_json: str) -> list[type("Vehicle")]:
         with open(path_to_json, "r") as fp:
@@ -63,7 +66,7 @@ class Vehicle:
 
 def main():
     vehicles = Vehicle.get_objects("../vehicles.json")
-    print(vehicles[1].Options)
+    print(vehicles[1])
     print(vehicles.__len__())
 
 
