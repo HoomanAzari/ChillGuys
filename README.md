@@ -1,75 +1,78 @@
-### Matador.ai Challenge: 🚗 Intelligent Car Finder Tool 🚘
+# ChillGuys - AI Chat Assistant for Car Dealerships
 
-#### 🌟 Objective:
-Design an **AI-powered tool** that helps customers discover their perfect vehicle from a dealership’s inventory. The solution should deliver results through an engaging **conversational experience** 🗣️, leveraging Natural Language Processing (NLP) for enhanced interaction.
+Welcome to the ChillGuys project! This repository showcases our submission for the CodeJam14 hackathon, where we've developed an AI chat assistant designed to make car dealership inquiries relaxed, fun, and efficient.
+
+## Project Overview
+
+ChillGuys is an AI-powered chat assistant inspired by the "Chill Guy" meme, also known as "My New Character." The assistant embodies a laid-back persona, providing a friendly and approachable experience to help customers find their perfect car.
+
+### Why We Chose This Persona
+
+We chose the "Chill Guy" persona for the AI because of his immense popularity and likability on social media, where countless memes highlight his laid-back, approachable nature. His relaxed demeanor resonates with people, making him the perfect choice to create an engaging and easygoing interaction experience. By adopting his personality, the AI becomes relatable and fun, encouraging customers to feel comfortable while discussing their car needs.
+
+## Features
+
+- **Relaxed and Friendly Persona:** The AI maintains a chill, easygoing vibe to make customers feel at ease during their interaction.
+- **Concise and Clear Responses:** Provides fun answers while ensuring the customer receives all the essential information.
+- **Tailored Vehicle Recommendations:** Analyzes customer needs and suggests vehicles that best match their preferences.
+- **Identity Consistency:** When asked about its identity, the AI replies: *"My whole deal is that I'm a chill guy that lowkey dgaf but I'm here to help you find your ideal car."*
+
+## Technology Stack
+
+### Frontend
+
+The ChillGuys web application is powered by a blend of cutting-edge technologies designed to deliver an exceptional user experience:
+
+- **Frontend:** Built using JavaScript, HTML, and CSS to craft a sleek and aesthetic user interface. 
+  - The design theme is cozy, featuring a minimalist yet visually stunning aesthetic, complemented by chill background music that sets a relaxed vibe.
+  - The interface is incredibly user-friendly and supports responsive media, ensuring a seamless experience on mobile devices, so you can browse cars effortlessly on the go.
+
+### Backend
+
+- **RESTful API:** The backend implements a RESTful API to facilitate seamless communication with the frontend. RESTful APIs are ideal for scalability, simplicity, and easy integration, making them a great choice for modern web applications.
+- **LLM Integration:** 
+  - The backend runs locally on a cloud compute engine instance to ensure full control and freedom while avoiding dependency on API keys.
+  - Utilizes Ollama to install and manage Llama 3 and Llama 3.2:1b models:
+    - **Llama 3** serves as the AI assistant.
+    - **Llama 3.2:1b** is used for embedding and managing database entries.
+- **LangChain:** The integration of LangChain enables robust functionality for both LLMs, ensuring smooth performance and efficient data handling.
+- **Personalized Prompt Engineering:** A tailored prompt has been crafted to perfectly align with the Chill Guy persona, ensuring every interaction reflects the assistant’s relaxed and helpful character.
+
+## Usage
+
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/HoomanAzari/ChillGuys.git
+   cd ChillGuys
+   ```
+
+2. **Setup Environment:**
+   Install the required dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Run the Application:**
+   Start the server:
+   ```bash
+   python app.py
+   ```
+
+4. **Interact with the AI:**
+   Access the application via the designated interface (e.g., web app, API, or command-line interface) to chat with the ChillGuys assistant.
+
+## License
+
+This project is licensed under the MIT License. See the `LICENSE` file for more details.
+
+## Acknowledgements
+
+We extend our gratitude to the CodeJam14 organizers for providing this platform and to our team for their dedication and creativity.
+
+## Contact
+
+Have questions or feedback? Reach out to Hooman Azari & Imad Issafras at hooazari@gmail.com and imad.issafras@outlook.com, respectively.
 
 ---
 
-#### 🎯 Flexible Key Features:
-
-You can implement any features you want to include in your tool. Here are some recommendations:
-
-1. **💬 Conversational Interface:**
-   - Enable users to interact naturally, as if speaking to a car expert. Examples:
-     - User: *"I need a family SUV under $40K with low mileage."*  
-       Tool: *"Sure! Here are three SUVs that fit your needs. Would you like to learn more about the first one?"*
-     - User: *"What’s the most fuel-efficient car you have?"*  
-       Tool: *"The Toyota Prius might be perfect for you! It gets 56 MPG combined. Would you like details?"*
-
-2. **📋 Flexible Preference Input:**
-   - Allow users to express preferences in free text or voice commands:
-     - Examples:
-       - *“I’m looking for a red convertible from 2020 or later.”*
-       - *“Show me trucks with leather seats.”*
-
-3. **🤖 NLP-Powered Matching:**
-   - Use NLP to interpret vague or complex user inputs:
-     - *“I need a luxury car for weekend road trips.”* → Match to high-end sedans or SUVs with premium features.
-     - *“What’s a good electric car for under $30,000?”* → Suggest EV options, prioritizing affordability.
-
-4. **🧠 Adaptive Follow-Ups:**
-   - Include follow-up questions to refine the search dynamically:
-     - Tool: *"Do you prefer new or used cars?"*  
-       User: *"Used is fine."*  
-       Tool: *"Got it! What’s your preferred mileage range?"*
-
-
-5. **📊 Detailed Vehicle Summaries:**
-   - Present information conversationally:
-     - *"This 2022 Honda CR-V is an all-wheel-drive SUV with 20,000 miles and is priced at $28,500. It’s available in red or silver. Would you like to see photos?"*
-
-6. **🗂️ Compare & Explore:**
-   - Allow users to ask for comparisons in plain language:
-     - *"How does this Ford F-150 compare to the Toyota Tundra?"*  
-       Tool: *"Here’s a side-by-side comparison of price, mileage, and features. Would you like to schedule a test drive for one of them?"*
-
----
-
-#### 🌈 Examples of Great Conversational Approaches:
-
-1. **Chatbot-Style Recommendation Assistant:**  
-   - Example: A chatbot that interprets user needs and responds conversationally:  
-     - *“Hi there! Looking for a new ride? Tell me what you need, and I’ll find it for you!”*
-
-2. **Conversational Vehicle Explorer:**  
-   - Example: A system that lets users ask exploratory questions:
-     - *“What’s the difference between AWD and FWD?”*
-     - *“Do you have any trucks with under 50,000 miles in blue?”*
-
-3. **Dynamic Follow-Up Assistant:**  
-   - Example: A tool that reacts to user responses and tailors further questions:  
-     - User: *“I like this one, but do you have it in black?”*  
-       Tool: *“Yes! The black model is $500 more but has the same features. Want to see photos?”*
-
----
-
-#### 🏆 Success Criteria:
-- The project should use the **dataset provided**.
-- The tool should **understand and respond conversationally** to user queries.
-- NLP should enable natural, flexible communication, handling ambiguous or incomplete inputs gracefully.
-
----
-
-Resources:
-- The dataset is available both as a CSV and JSON file.
-- Another md file is available, explaining what each datapoint means.
+Get ready to chill with My New Character and discover your next ride in a chill way!
