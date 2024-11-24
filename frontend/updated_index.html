@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My new character</title>
+    <!--Google font icon-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
+    <link rel="stylesheet" href="/frontend/updated_style_chill.css">
+</head>
+<body>
+    <button id="chatbot-toggler">
+        <span class="material-symbols-rounded">mode_comment</span>
+        <span class="material-symbols-rounded">close</span>
+    </button>
+    <div class="chatbot-popup">
+        <!-- Chatbot header-->
+        <div class="chat-header">
+            <div class="header-info">
+                <img class="chatbot-logo" src="/frontend/face-close.webp" width="50" height="50" viewBox="0 0 1024 1024">
+                <h2 class="logo-text">Chill Guy Chatbot</h2>
+            </div>
+            <button id="close-chatbot" class="material-symbols-rounded">keyboard_arrow_down</button>
+        </div>
+
+        <!-- Chatbot body-->
+        <div class="chat-body">
+            <div class="message bot-message">
+            <img class="bot-avatar" src="/frontend/chill-guy.png" alt="Chill Guy Avatar" width="50" height="50" viewBox="0 0 1024 1024">
+            <div class="message-text"> He's my new character.<br /> His whole deal is he's a chill guy that lowkey dgaf. How can he help you? </div>
+            </div>
+        </div>
+
+        <!-- Chatbot footer-->
+        <div class="chat-footer">
+            <form action="#" class="chat-form">
+                <textarea placeholder="Message..." 
+                class="message-input" required></textarea>
+                <div class="chat-controls">
+                    <button type="button" class="material-symbols-outlined">sentiment_satisfied</button>
+                    <button type="button" class="material-symbols-rounded">MIC</button>
+                    <button type="submit" id="send-message" class="material-symbols-rounded">arrow_upward</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/frontend/script.js"></script>
+</body>
+</html>
