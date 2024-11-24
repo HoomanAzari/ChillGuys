@@ -115,3 +115,30 @@ messageInput.addEventListener("keydown", (e) => {
 sendMessageButton.addEventListener("click", (e) => handleOutgoingMessage(e));
 chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
 closeChatbot.addEventListener("click", () => document.body.classList.remove("show-chatbot"));
+document.addEventListener("DOMContentLoaded", () => {
+    const audio = document.getElementById("background-audio");
+    const muteButton = document.getElementById("mute-button");
+
+    // Start with the audio muted
+    audio.muted = true;
+    muteButton.textContent = "volume_off"; // Set the icon to 'muted' state initially
+
+    // Play audio on user interaction if autoplay is blocked
+    document.body.addEventListener("click", () => {
+        if (audio.paused && !audio.muted) {
+            audio.play();
+        }
+    });
+
+    // Mute/unmute functionality
+    muteButton.addEventListener("click", () => {
+        if (audio.muted) {
+            audio.muted = false;
+            muteButton.textContent = "volume_up"; // Change icon to volume up
+            audio.play(); // Start playing the audio if unmuted
+        } else {
+            audio.muted = true;
+            muteButton.textContent = "volume_off"; // Change icon to volume off
+        }
+    });
+});

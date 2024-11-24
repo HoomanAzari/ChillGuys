@@ -287,6 +287,20 @@ body.show-chatbot .chatbot-popup {
     background: #D4A373;
 }
 
+#mute-button {
+    color: #A67C52;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease;
+    border-radius: 50%;
+}
+
+#mute-button:hover {
+    background: #E7E2D0;
+    color: #8A5E37;
+}
+
 .chat-form .message-input:valid~.chat-controls #send-message{
     display: block;
 }
