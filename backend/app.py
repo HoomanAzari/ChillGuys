@@ -1,10 +1,11 @@
-import os
 from flask import Flask, request, jsonify
-from assistant import Assistant, vehicles
+# from assistant import CarDealershipAssistant, vehicles
+from assistant import ChillGuyChatbot
 
 # Initialize the Assistant with the vehicle data
-vehicles_list = vehicles.Vehicle.get_objects("../vehicles.json")
-assistant = Assistant(vehicles_list)
+# vehicles_list = vehicles.Vehicle.get_objects("../vehicles.json")
+# assistant = CarDealershipAssistant(vehicles_list)
+assistant = ChillGuyChatbot()
 
 app = Flask(__name__, static_folder="../frontend")
 
@@ -28,11 +29,11 @@ def generate_response_route():
 
         # Convert chat history into `Interaction` objects
         past_interactions = [
-            Assistant.Interaction(
-                source=Assistant.Interaction.Source.HUMAN if chat["role"] == "user" else Assistant.Interaction.Source.AI,
-                message=chat["text"]
-            )
-            for chat in chat_history
+            assistant.Interaction(
+                source=assistant.Interaction.Source.HUMAN
+                if chat["role"] == "user" else
+                assistant.Interaction.Source.AI,
+                message=chat["text"]) for chat in chat_history
         ]
 
         # Use prompt_bot to generate the bot response
@@ -45,4 +46,4 @@ def generate_response_route():
 
 
 if __name__ == "__main__":
-    app.run(debug=True,host="0.0.0.0", port=80)
+    app.run(debug=True, host="0.0.0.0", port=80)
